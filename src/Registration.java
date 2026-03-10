@@ -16,6 +16,7 @@ public class Registration extends javax.swing.JFrame {
      */
     public Registration() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -65,6 +66,11 @@ public class Registration extends javax.swing.JFrame {
 
         jname.setBackground(new java.awt.Color(189, 195, 199));
         jname.setText("Enter your name");
+        jname.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jnameFocusGained(evt);
+            }
+        });
         jPanel1.add(jname, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 51, 292, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -103,9 +109,10 @@ public class Registration extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Register");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 262, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(236, 240, 241));
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Clear");
@@ -115,7 +122,8 @@ public class Registration extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Back");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 262, -1, -1));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, -1, -1));
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 255));
         jLabel7.setText("<html><u>Already have an account? Login here</u></html>");
@@ -140,6 +148,26 @@ public class Registration extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jnameFocusGained
+        // TODO add your handling code here:
+                                                   
+    if (jname.getText().equals("Enter your name")) {
+        jname.setText(""); // Clear the placeholder
+        jname.setForeground(java.awt.Color.BLACK); // Set text to solid black
+    }
+
+    }//GEN-LAST:event_jnameFocusGained
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+new Mylogin().setVisible(true); 
+    this.dispose();       
+    // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
