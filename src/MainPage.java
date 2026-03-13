@@ -64,7 +64,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jAbout = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
 
@@ -199,8 +199,9 @@ public class MainPage extends javax.swing.JFrame {
 
         jMenu3.setText("Help");
 
-        jMenuItem4.setText("About");
-        jMenu3.add(jMenuItem4);
+        jAbout.setText("About");
+        jAbout.addActionListener(this::jAboutActionPerformed);
+        jMenu3.add(jAbout);
 
         jMenuBar1.add(jMenu3);
 
@@ -273,6 +274,11 @@ public class MainPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAboutActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jAboutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -300,6 +306,7 @@ public class MainPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> courseDropdown;
+    private javax.swing.JMenuItem jAbout;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -323,7 +330,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
