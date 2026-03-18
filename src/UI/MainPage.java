@@ -55,7 +55,76 @@ public void showStudent() {
         JOptionPane.showMessageDialog(null, e);
     }
 }
-   
+   private void searchStudent() {
+    try {
+        stmt = conn.createStatement();
+
+        // Base query
+        String sql = "SELECT id, name, email, marks, course FROM student WHERE 1=1";
+
+        // --- Search input (name, email, id) ---
+        String keyword = searchInput.getText().trim();
+        if (!keyword.isEmpty()) {
+            if (jRadid.isSelected()) {
+                sql += " AND id = " + keyword; // numeric search
+            } else {
+                sql += " AND (name LIKE '%" + keyword + "%' OR email LIKE '%" + keyword + "%')";
+            }
+        }
+
+        // --- Filter by course ---
+        String selectedCourse = course.getSelectedItem().toString();
+        if (!selectedCourse.isEmpty()) {
+            sql += " AND course = '" + selectedCourse + "'";
+        }
+
+        // --- Filter by pass/fail ---
+        if (jCheckBpass.isSelected() && !jCheckBfail.isSelected()) {
+            sql += " AND marks >= 50"; // pass
+        } else if (!jCheckBpass.isSelected() && jCheckBfail.isSelected()) {
+            sql += " AND marks < 50"; // fail
+        }
+
+        // --- Filter by marks slider ---
+        int sliderMarks = sldmarks.getValue();
+        sql += " AND marks >= " + sliderMarks;
+
+        // --- Sorting ---
+        if (jRadid.isSelected()) {
+            sql += " ORDER BY id";
+        } else if (jRadname.isSelected()) {
+            sql += " ORDER BY name";
+        }
+
+        rs = stmt.executeQuery(sql);
+
+        javax.swing.table.DefaultTableModel model =
+            new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+            );
+
+        boolean found = false;
+        while (rs.next()) {
+            found = true;
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(null, "No student found matching the criteria.");
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -207,6 +276,7 @@ public void showStudent() {
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
         searchButton.setText("Search");
+        searchButton.addActionListener(this::searchButtonActionPerformed);
 
         jMenuBar1.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -352,6 +422,92 @@ public void showStudent() {
     private void allStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allStudentActionPerformed
         showStudent();
     }//GEN-LAST:event_allStudentActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+
+    try {
+        stmt = conn.createStatement();
+
+        String sql = "SELECT id, name, email, marks, course FROM student WHERE 1=1";
+
+        String keyword = searchInput.getText().trim();
+
+        // ✅ PRIORITY SEARCH (keyword)
+        if (!keyword.isEmpty()) {
+            keyword = keyword.toUpperCase();
+
+            sql += " AND (UPPER(name) LIKE '%" + keyword + "%'"
+                 + " OR UPPER(email) LIKE '%" + keyword + "%'"
+                 + " OR UPPER(course) LIKE '%" + keyword + "%')";
+
+        } else {
+            // ✅ ONLY apply filters when NO keyword
+
+            // --- Course filter ---
+            String selectedCourse = course.getSelectedItem().toString();
+            if (selectedCourse != null &&
+                !selectedCourse.equals("") &&
+                !selectedCourse.equalsIgnoreCase("All") &&
+                !selectedCourse.equalsIgnoreCase("Select Course")) {
+
+                sql += " AND course = '" + selectedCourse + "'";
+            }
+
+            // --- Pass / Fail ---
+            if (jCheckBpass.isSelected() && !jCheckBfail.isSelected()) {
+                sql += " AND marks >= 50";
+            } else if (!jCheckBpass.isSelected() && jCheckBfail.isSelected()) {
+                sql += " AND marks < 50";
+            }
+
+            // --- Slider ---
+            int sliderMarks = sldmarks.getValue();
+            if (sliderMarks > 0) {
+                sql += " AND marks >= " + sliderMarks;
+            }
+        }
+
+        // --- Sorting ---
+        if (jRadid.isSelected()) {
+            sql += " ORDER BY id";
+        } else if (jRadname.isSelected()) {
+            sql += " ORDER BY name";
+        }
+
+        // 🔥 DEBUG
+        System.out.println("SQL: " + sql);
+
+        rs = stmt.executeQuery(sql);
+
+        javax.swing.table.DefaultTableModel model =
+            new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+            );
+
+        boolean found = false;
+
+        while (rs.next()) {
+            found = true;
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(null, "No student found.");
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+
+    }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
      * @param args the command line arguments
