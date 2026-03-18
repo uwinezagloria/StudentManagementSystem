@@ -1,8 +1,8 @@
+
 package models;
 
 import database.DatabaseConnection;
 import interfaces.DatabaseOperations;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +18,11 @@ public class PersonService extends Person implements DatabaseOperations {
 
         try{
 
-            Connection conn = DBConnection.getConnection();
+            Connection conn = DatabaseConnection.getConnection();
 
-            String sql = "INSERT INTO Person(first_name,last_name,email,phone,password) VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO person(first_name,last_name,email,phone,password) VALUES(?,?,?,?,?)";
 
+            
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, firstName);
