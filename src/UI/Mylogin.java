@@ -3,32 +3,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+
+import database.DatabaseConnection;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 //import java.awt.Color;
 public class Mylogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Mylogin.class.getName());
 
-    /**
-     * Creates new form Mylogin
-     */
+    Connection conn=null;
+    Statement stmt=null;
+    ResultSet rs=null;
     public Mylogin() {
+        super("Login");
         initComponents();
+        conn=DatabaseConnection.getConnection();
         loadSavedCredentials();
     }
     private void loadSavedCredentials() {
-    java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(Mylogin.class);
-    boolean remember = prefs.getBoolean("remember", false);
+java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(Mylogin.class);
     
-    if (remember) {
+    boolean rem = prefs.getBoolean("remember", false);
+
+    if (rem) {
         String savedUser = prefs.get("username", "");
-         String savedpass = prefs.get("password", "");
-        jTextField1.setText(savedUser); // Put username back in text field
-        jPasswordField1.setText(savedpass);
-        jremember.setSelected(true);    // Keep checkbox checked
+        String savedpass = prefs.get("password", "");
+        
+        email.setText(savedUser);
+        password.setText(savedpass);
+        remember.setSelected(true);
     }
 }
 
@@ -45,13 +52,12 @@ public class Mylogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         bname = new javax.swing.JLabel();
         bpassword = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jremember = new javax.swing.JCheckBox();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jlogb = new javax.swing.JButton();
-        jreset = new javax.swing.JButton();
+        email = new javax.swing.JTextField();
+        remember = new javax.swing.JCheckBox();
+        password = new javax.swing.JPasswordField();
+        login = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        prgLoading = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,37 +69,37 @@ public class Mylogin extends javax.swing.JFrame {
         jLabel1.setText("Student Management System");
 
         bname.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        bname.setText("Username :");
+        bname.setText("Email      ");
 
         bpassword.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        bpassword.setText("Password : ");
+        bpassword.setText("Password ");
 
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        email.setText("gloria7wineza@gmail.com");
+        email.addActionListener(this::emailActionPerformed);
 
-        jremember.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        jremember.setText("Remember Me");
-        jremember.addActionListener(this::jrememberActionPerformed);
+        remember.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        remember.setText("Remember Me");
+        remember.addActionListener(this::rememberActionPerformed);
 
-        jPasswordField1.setPreferredSize(new java.awt.Dimension(64, 22));
+        password.setText("gogo");
+        password.addActionListener(this::passwordActionPerformed);
 
-        jlogb.setBackground(new java.awt.Color(0, 102, 255));
-        jlogb.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jlogb.setForeground(new java.awt.Color(255, 255, 255));
-        jlogb.setText("Login");
-        jlogb.setPreferredSize(new java.awt.Dimension(100, 30));
-        jlogb.addActionListener(this::jlogbActionPerformed);
+        login.setBackground(new java.awt.Color(0, 102, 255));
+        login.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        login.setForeground(new java.awt.Color(255, 255, 255));
+        login.setText("Login");
+        login.setPreferredSize(new java.awt.Dimension(100, 30));
+        login.addActionListener(this::loginActionPerformed);
 
-        jreset.setBackground(new java.awt.Color(0, 51, 255));
-        jreset.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        jreset.setForeground(new java.awt.Color(255, 255, 255));
-        jreset.setText("Reset");
-        jreset.setPreferredSize(new java.awt.Dimension(100, 30));
-        jreset.addActionListener(this::jresetActionPerformed);
+        reset.setBackground(new java.awt.Color(0, 51, 255));
+        reset.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
+        reset.setForeground(new java.awt.Color(255, 255, 255));
+        reset.setText("Reset");
+        reset.setPreferredSize(new java.awt.Dimension(100, 30));
+        reset.addActionListener(this::resetActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 0, 51));
-
-        prgLoading.setStringPainted(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,29 +109,26 @@ public class Mylogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(bname, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(bpassword)
-                        .addGap(25, 25, 25)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jlogb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(220, 220, 220)
-                        .addComponent(jreset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(prgLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(jremember, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(80, 80, 80)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(remember, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(80, 80, 80)
+                                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(bname, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(bpassword))
+                                    .addGap(20, 20, 20)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(98, 98, 98))
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,24 +138,20 @@ public class Mylogin extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bname)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bpassword)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62)
-                .addComponent(jremember)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlogb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jreset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(remember)
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(prgLoading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,90 +168,59 @@ public class Mylogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_emailActionPerformed
 
-    private void jlogbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlogbActionPerformed
-        // TODO add your handling code here:
-String user = jTextField1.getText();
-    String pass = new String(jPasswordField1.getPassword());
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+        try{
+          stmt=conn.createStatement();
+          String userEmail=email.getText();
+          String userPassword=password.getText();
+          String sql="select * from person where email='"+userEmail+"'&& password='"+userPassword+"' ";
+          rs=stmt.executeQuery(sql);
+          if(rs.next()){
+               // ✅ SAVE REMEMBER ME DATA
+            java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(Mylogin.class);
 
-    // 1. Basic Validation
-    if (user.isEmpty() || pass.isEmpty()) {
-        jLabel3.setText("Fields cannot be empty!");
-        jLabel3.setForeground(java.awt.Color.RED);
-        return;
-    }
-
-    // 2. Prepare the Progress Bar
-    prgLoading.setVisible(true);
-    prgLoading.setValue(0);
-    prgLoading.setStringPainted(true); // Shows the % text
-
-    // 3. The Loading Timer (Animation + Database Call)
-    javax.swing.Timer timer = new javax.swing.Timer(15, null); 
-    timer.addActionListener(new java.awt.event.ActionListener() {
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            int current = prgLoading.getValue();
-            if (current < 100) {
-                prgLoading.setValue(current + 1); // Increase percentage
+            if (remember.isSelected()) {
+                prefs.put("username", userEmail);
+                prefs.put("password", userPassword);
+                prefs.putBoolean("remember", true);
             } else {
-                timer.stop(); // Stop animation at 100%
-                
-                // 4. Database logic runs AFTER the bar hits 100%
-                try (Connection conn = DatabaseConnection.getConnection()) {
-                    String sql = "SELECT * FROM users WHERE username=? AND password=?";
-                    PreparedStatement pst = conn.prepareStatement(sql);
-                    pst.setString(1, user);
-                    pst.setString(2, pass);
-
-                    ResultSet rs = pst.executeQuery();
-                    if (rs.next()) {
-                        // Remember Me Logic
-                        java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(Mylogin.class);
-                        if (jremember.isSelected()) {
-                            prefs.put("username", user);
-                            prefs.put("password", pass);
-                            prefs.putBoolean("remember", true);
-                        } else {
-                            prefs.putBoolean("remember", false);
-                        }
-
-                        jLabel3.setText("Login Success");
-                        jLabel3.setForeground(java.awt.Color.GREEN);
-
-                        new MainPage().setVisible(true);
-                        dispose(); // Close login window
-                    } else {
-                        jLabel3.setText("Login Failed");
-                        jLabel3.setForeground(java.awt.Color.RED);
-                        prgLoading.setVisible(false);
-                    }
-                } catch (SQLException ex) {
-                    prgLoading.setVisible(false);
-                    jLabel3.setText("Database Connection Error!");
-                    ex.printStackTrace();
-                }
+                prefs.put("username", "");
+                prefs.put("password", "");
+                prefs.putBoolean("remember", false);
             }
+              setVisible(false);
+              MainPage object=new MainPage();
+              object.setVisible(true);
+          } else{
+              JOptionPane.showMessageDialog(null,"Email or Password is invalid");
+          }
         }
-    });
-    timer.start();
-    }//GEN-LAST:event_jlogbActionPerformed
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
 
-    private void jresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jresetActionPerformed
-        // TODO add your handling code here:
-        jTextField1.setText("");
-    jPasswordField1.setText("");
-    jremember.setSelected(false);
-    jLabel3.setText(""); // Clears the Login Success/Failed message
-    prgLoading.setVisible(false); // Hides the progress bar
-    }//GEN-LAST:event_jresetActionPerformed
+    }//GEN-LAST:event_loginActionPerformed
 
-    private void jrememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrememberActionPerformed
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jrememberActionPerformed
+        email.setText("");
+    password.setText("");
+    remember.setSelected(false);
+ 
+    
+    }//GEN-LAST:event_resetActionPerformed
+
+    private void rememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rememberActionPerformed
+
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,14 +250,13 @@ String user = jTextField1.getText();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bname;
     private javax.swing.JLabel bpassword;
+    private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JButton jlogb;
-    private javax.swing.JCheckBox jremember;
-    private javax.swing.JButton jreset;
-    private javax.swing.JProgressBar prgLoading;
+    private javax.swing.JButton login;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JCheckBox remember;
+    private javax.swing.JButton reset;
     // End of variables declaration//GEN-END:variables
 }
