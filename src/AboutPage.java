@@ -27,118 +27,205 @@ public class AboutPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        lblTitle = new javax.swing.JLabel();
-        lblversion = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        emoj = new javax.swing.JLabel();
+        name = new javax.swing.JLabel();
+        version = new javax.swing.JLabel();
+        tagline = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        section = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        section2 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        section1 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        section3 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(220, 235, 245));
+        setPreferredSize(new java.awt.Dimension(460, 20));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 255), null));
-        jPanel1.setForeground(new java.awt.Color(0, 0, 255));
-        jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        emoj.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
+        emoj.setForeground(new java.awt.Color(21, 101, 192));
+        emoj.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emoj.setText("🎓");
+        emoj.setAlignmentX(235.0F);
+        emoj.setAlignmentY(15.0F);
+        getContentPane().add(emoj, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 23, -1, -1));
 
-        lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(0, 51, 255));
-        lblTitle.setText("About Student Management System");
+        name.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        name.setForeground(new java.awt.Color(21, 101, 192));
+        name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        name.setText("Student Management System");
+        name.setAlignmentX(30.0F);
+        name.setAlignmentY(75.0F);
+        name.setPreferredSize(new java.awt.Dimension(460, 30));
+        getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 76, -1, -1));
 
-        lblversion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblversion.setText("<html><b>Version:</b> 1.0 (Stable)</html>");
+        version.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        version.setForeground(new java.awt.Color(96, 125, 139));
+        version.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        version.setText("Version 1.0.0 · Year 2 CSE Lab 1");
+        version.setAlignmentX(30.0F);
+        version.setAlignmentY(112.0F);
+        version.setPreferredSize(new java.awt.Dimension(460, 20));
+        getContentPane().add(version, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 112, -1, -1));
 
-        jLabel3.setText("<html><b>Developed by:</b> BYUKUSENGE Ezira and UWINEZA Gloria</html>");
+        tagline.setFont(new java.awt.Font("SansSerif", 2, 12)); // NOI18N
+        tagline.setForeground(new java.awt.Color(69, 90, 100));
+        tagline.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tagline.setText("\"Managing student records with ease and efficiency\"");
+        tagline.setAlignmentX(30.0F);
+        tagline.setAlignmentY(136.0F);
+        getContentPane().add(tagline, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 138, -1, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 160, 588, 10));
 
-        jLabel1.setText("<html><b>Built with:</b> Java Swing & MySQL</html>");
+        section.setForeground(new java.awt.Color(92, 101, 192));
+        section.setText("DEVELOPMENT TEAM");
+        getContentPane().add(section, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 534, -1, -1));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 204, 115, 10));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("This Student Management System is \ndesigned to streamline the registration\nprocess, track course enrollments, and\n manage academic information efficiently");
-        jTextArea1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 204, 255), null));
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(55, 71, 79));
+        jLabel1.setText("Platform:  Java Swing");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 220, 113, -1));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Description :");
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(55, 71, 79));
+        jLabel2.setText("Database SQLite :MySQL");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 220, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(255, 102, 102));
-        jButton1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(55, 71, 79));
+        jLabel3.setText("Language :Java JDK 17+");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 250, -1, -1));
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(55, 71, 79));
+        jLabel4.setText("Build Year :    2025");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 250, -1, -1));
+
+        section2.setForeground(new java.awt.Color(92, 101, 192));
+        section2.setText("KEY FEATURES");
+        getContentPane().add(section2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 284, -1, -1));
+        getContentPane().add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 306, 34, 10));
+
+        jLabel6.setText("✓ Secure login with username, password and Remember Me");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 322, -1, -1));
+
+        jLabel7.setText("✓ Add, Update, Delete and Search student records (CRUD)");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 344, -1, -1));
+
+        jLabel8.setText("✓ Sort by ID or Name — filter by Pass / Fail status");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 366, -1, -1));
+
+        jLabel9.setText("✓ Filter by marks range using interactive slide");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 388, -1, -1));
+
+        jLabel10.setText("✓ Student registration with personal info and security");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 410, -1, -1));
+
+        jLabel11.setText("✓ OOP design — abstract classes, interfaces, inheritance");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 432, -1, -1));
+
+        section1.setForeground(new java.awt.Color(92, 101, 192));
+        section1.setText("BUILT WITH");
+        getContentPane().add(section1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 460, 684, -1));
+        getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 482, 71, 10));
+
+        jLabel5.setBackground(new java.awt.Color(227, 242, 253));
+        jLabel5.setForeground(new java.awt.Color(92, 101, 192));
+        jLabel5.setText("Java Swing");
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 498, -1, -1));
+
+        jLabel12.setBackground(new java.awt.Color(227, 242, 253));
+        jLabel12.setForeground(new java.awt.Color(92, 101, 192));
+        jLabel12.setText("JDBC");
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 498, -1, -1));
+
+        jLabel13.setBackground(new java.awt.Color(227, 242, 253));
+        jLabel13.setForeground(new java.awt.Color(92, 101, 192));
+        jLabel13.setText("SQLite");
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 498, -1, -1));
+
+        jLabel14.setBackground(new java.awt.Color(227, 242, 253));
+        jLabel14.setForeground(new java.awt.Color(92, 101, 192));
+        jLabel14.setText("NetBeans IDE ");
+        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 498, -1, -1));
+
+        jLabel15.setBackground(new java.awt.Color(227, 242, 253));
+        jLabel15.setForeground(new java.awt.Color(92, 101, 192));
+        jLabel15.setText("OOP");
+        jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(388, 498, -1, -1));
+
+        jLabel16.setBackground(new java.awt.Color(227, 242, 253));
+        jLabel16.setForeground(new java.awt.Color(92, 101, 192));
+        jLabel16.setText("GitHub");
+        jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 498, -1, -1));
+
+        section3.setForeground(new java.awt.Color(92, 101, 192));
+        section3.setText("APPLICATION INFO");
+        getContentPane().add(section3, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 169, 191, -1));
+        getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 556, 115, 10));
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setForeground(new java.awt.Color(51, 71, 79));
+        jLabel17.setText("GUI Design · OOP");
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 600, -1, -1));
+
+        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel18.setForeground(new java.awt.Color(51, 71, 79));
+        jLabel18.setText("BYUKUSENGE EZIRA");
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 572, -1, -1));
+
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setForeground(new java.awt.Color(51, 71, 79));
+        jLabel19.setText("UWINEZA GLORIA");
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 572, -1, -1));
+
+        jLabel20.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel20.setForeground(new java.awt.Color(51, 71, 79));
+        jLabel20.setText("Database · Logic");
+        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 600, -1, -1));
+        getContentPane().add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 692, 586, 10));
+
+        jButton1.setBackground(new java.awt.Color(0, 0, 255));
+        jButton1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Back");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addContainerGap(304, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblversion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitle)
-                .addGap(18, 18, 18)
-                .addComponent(lblversion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(20, 20, 20))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jButton1.setText("close");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 634, 570, 42));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-    new MainPage().setVisible(true); 
-    this.dispose();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,14 +253,40 @@ public class AboutPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel emoj;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel lblTitle;
-    private javax.swing.JLabel lblversion;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JLabel name;
+    private javax.swing.JLabel section;
+    private javax.swing.JLabel section1;
+    private javax.swing.JLabel section2;
+    private javax.swing.JLabel section3;
+    private javax.swing.JLabel tagline;
+    private javax.swing.JLabel version;
     // End of variables declaration//GEN-END:variables
 }

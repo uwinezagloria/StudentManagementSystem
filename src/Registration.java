@@ -30,20 +30,20 @@ public class Registration extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jname = new javax.swing.JTextField();
+        jFname = new javax.swing.JLabel();
+        firstname = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jEmail = new javax.swing.JTextField();
+        phoneNumber = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jPassword = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
-        jconfirmPassword = new javax.swing.JPasswordField();
+        confirmpassword = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
+        loginhere = new javax.swing.JLabel();
         jLabel_Status = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        progressbar = new javax.swing.JProgressBar();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lastname = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -56,7 +56,7 @@ public class Registration extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         jSeparator9 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
-        jEmail1 = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 244, 255));
@@ -69,25 +69,25 @@ public class Registration extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(21, 101, 192));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(25, 118, 210));
-        jLabel1.setText("Student Registration Portal");
+        jLabel1.setText("CREATE ACCOUNT");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 305, -1));
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(44, 62, 114));
-        jLabel2.setText("First Name :");
-        jLabel2.setPreferredSize(new java.awt.Dimension(130, 25));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 51, 80, -1));
+        jFname.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        jFname.setForeground(new java.awt.Color(44, 62, 114));
+        jFname.setText("First Name :");
+        jFname.setPreferredSize(new java.awt.Dimension(130, 25));
+        jPanel1.add(jFname, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 51, 80, -1));
 
-        jname.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jname.setForeground(new java.awt.Color(26, 39, 80));
-        jname.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
-        jname.setPreferredSize(new java.awt.Dimension(250, 28));
-        jname.addFocusListener(new java.awt.event.FocusAdapter() {
+        firstname.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        firstname.setForeground(new java.awt.Color(26, 39, 80));
+        firstname.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
+        firstname.setPreferredSize(new java.awt.Dimension(250, 28));
+        firstname.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jnameFocusGained(evt);
+                firstnameFocusGained(evt);
             }
         });
-        jPanel1.add(jname, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 292, -1));
+        jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 292, -1));
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(44, 62, 114));
@@ -96,13 +96,13 @@ public class Registration extends javax.swing.JFrame {
         jLabel3.setPreferredSize(new java.awt.Dimension(130, 25));
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
-        jEmail.setColumns(30);
-        jEmail.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jEmail.setForeground(new java.awt.Color(26, 39, 80));
-        jEmail.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
-        jEmail.setPreferredSize(new java.awt.Dimension(255, 28));
-        jEmail.addActionListener(this::jEmailActionPerformed);
-        jPanel1.add(jEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 296, -1));
+        phoneNumber.setColumns(30);
+        phoneNumber.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        phoneNumber.setForeground(new java.awt.Color(26, 39, 80));
+        phoneNumber.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
+        phoneNumber.setPreferredSize(new java.awt.Dimension(255, 28));
+        phoneNumber.addActionListener(this::phoneNumberActionPerformed);
+        jPanel1.add(phoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 296, -1));
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(44, 62, 114));
@@ -111,14 +111,14 @@ public class Registration extends javax.swing.JFrame {
         jLabel4.setPreferredSize(new java.awt.Dimension(130, 25));
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 100, -1));
 
-        jPassword.setColumns(20);
-        jPassword.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jPassword.setForeground(new java.awt.Color(26, 39, 80));
-        jPassword.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
-        jPassword.setPreferredSize(new java.awt.Dimension(255, 28));
-        jPassword.setRequestFocusEnabled(false);
-        jPassword.addActionListener(this::jPasswordActionPerformed);
-        jPanel1.add(jPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 294, -1));
+        password.setColumns(20);
+        password.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        password.setForeground(new java.awt.Color(26, 39, 80));
+        password.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
+        password.setPreferredSize(new java.awt.Dimension(255, 28));
+        password.setRequestFocusEnabled(false);
+        password.addActionListener(this::passwordActionPerformed);
+        jPanel1.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 294, -1));
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(26, 39, 80));
@@ -127,12 +127,12 @@ public class Registration extends javax.swing.JFrame {
         jLabel5.setPreferredSize(new java.awt.Dimension(130, 25));
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
-        jconfirmPassword.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jconfirmPassword.setForeground(new java.awt.Color(26, 39, 80));
-        jconfirmPassword.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
-        jconfirmPassword.setPreferredSize(new java.awt.Dimension(255, 28));
-        jconfirmPassword.addActionListener(this::jconfirmPasswordActionPerformed);
-        jPanel1.add(jconfirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 246, -1));
+        confirmpassword.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        confirmpassword.setForeground(new java.awt.Color(26, 39, 80));
+        confirmpassword.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
+        confirmpassword.setPreferredSize(new java.awt.Dimension(255, 28));
+        confirmpassword.addActionListener(this::confirmpasswordActionPerformed);
+        jPanel1.add(confirmpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 246, -1));
 
         jButton1.setBackground(new java.awt.Color(25, 118, 210));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -141,16 +141,16 @@ public class Registration extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
 
-        jLabel7.setBackground(new java.awt.Color(0, 204, 0));
-        jLabel7.setText("<html><u>Already have an account? Login here</u></html>");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 200, -1));
+        loginhere.setBackground(new java.awt.Color(0, 204, 0));
+        loginhere.setText("<html><u>Already have an account? Login here</u></html>");
+        jPanel1.add(loginhere, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 200, -1));
         jPanel1.add(jLabel_Status, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, -1, -1));
 
-        jProgressBar1.setBackground(new java.awt.Color(21, 101, 192));
-        jProgressBar1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jProgressBar1.setForeground(new java.awt.Color(204, 255, 255));
-        jProgressBar1.setStringPainted(true);
-        jPanel1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, 10));
+        progressbar.setBackground(new java.awt.Color(21, 101, 192));
+        progressbar.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        progressbar.setForeground(new java.awt.Color(204, 255, 255));
+        progressbar.setStringPainted(true);
+        jPanel1.add(progressbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, 10));
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(44, 62, 114));
@@ -159,11 +159,12 @@ public class Registration extends javax.swing.JFrame {
         jLabel8.setPreferredSize(new java.awt.Dimension(130, 25));
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 80, -1));
 
-        jTextField1.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(26, 39, 80));
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
-        jTextField1.setPreferredSize(new java.awt.Dimension(255, 28));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 220, -1));
+        lastname.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        lastname.setForeground(new java.awt.Color(26, 39, 80));
+        lastname.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
+        lastname.setPreferredSize(new java.awt.Dimension(255, 28));
+        lastname.addActionListener(this::lastnameActionPerformed);
+        jPanel1.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 220, -1));
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(25, 118, 210));
@@ -188,13 +189,13 @@ public class Registration extends javax.swing.JFrame {
         jLabel12.setText("Phone :");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
 
-        jEmail1.setColumns(30);
-        jEmail1.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jEmail1.setForeground(new java.awt.Color(26, 39, 80));
-        jEmail1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
-        jEmail1.setPreferredSize(new java.awt.Dimension(255, 28));
-        jEmail1.addActionListener(this::jEmail1ActionPerformed);
-        jPanel1.add(jEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 296, -1));
+        email.setColumns(30);
+        email.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        email.setForeground(new java.awt.Color(26, 39, 80));
+        email.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(192, 221, 252), null));
+        email.setPreferredSize(new java.awt.Dimension(255, 28));
+        email.addActionListener(this::emailActionPerformed);
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 296, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,30 +215,34 @@ public class Registration extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jconfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jconfirmPasswordActionPerformed
+    private void confirmpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmpasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jconfirmPasswordActionPerformed
+    }//GEN-LAST:event_confirmpasswordActionPerformed
 
-    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordActionPerformed
+    }//GEN-LAST:event_passwordActionPerformed
 
-    private void jEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEmailActionPerformed
+    private void phoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jEmailActionPerformed
+    }//GEN-LAST:event_phoneNumberActionPerformed
 
-    private void jnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jnameFocusGained
+    private void firstnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstnameFocusGained
         // TODO add your handling code here:
 
-        if (jname.getText().equals("Enter your name")) {
-            jname.setText(""); // Clear the placeholder
-            jname.setForeground(java.awt.Color.BLACK); // Set text to solid black
+        if (firstname.getText().equals("Enter your name")) {
+            firstname.setText(""); // Clear the placeholder
+            firstname.setForeground(java.awt.Color.BLACK); // Set text to solid black
         }
-    }//GEN-LAST:event_jnameFocusGained
+    }//GEN-LAST:event_firstnameFocusGained
 
-    private void jEmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEmail1ActionPerformed
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jEmail1ActionPerformed
+    }//GEN-LAST:event_emailActionPerformed
+
+    private void lastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastnameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,23 +270,21 @@ public class Registration extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField confirmpassword;
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField firstname;
     private javax.swing.JButton jButton1;
-    private javax.swing.JTextField jEmail;
-    private javax.swing.JTextField jEmail1;
+    private javax.swing.JLabel jFname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_Status;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPassword;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -291,8 +294,10 @@ public class Registration extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JPasswordField jconfirmPassword;
-    private javax.swing.JTextField jname;
+    private javax.swing.JTextField lastname;
+    private javax.swing.JLabel loginhere;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JTextField phoneNumber;
+    private javax.swing.JProgressBar progressbar;
     // End of variables declaration//GEN-END:variables
 }
