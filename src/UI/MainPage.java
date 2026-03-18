@@ -55,7 +55,7 @@ public void showStudent() {
         JOptionPane.showMessageDialog(null, e);
     }
 }
-   
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -71,7 +71,6 @@ public void showStudent() {
         course = new javax.swing.JComboBox<>();
         updateStudent = new javax.swing.JButton();
         deleteStudent = new javax.swing.JButton();
-        clearStudentForm = new javax.swing.JButton();
         addStudent = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         studentTable = new javax.swing.JScrollPane();
@@ -80,8 +79,8 @@ public void showStudent() {
         searchInput = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jRadid = new javax.swing.JRadioButton();
-        jRadname = new javax.swing.JRadioButton();
+        sortbyId = new javax.swing.JRadioButton();
+        sortByname = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jCheckBfail = new javax.swing.JCheckBox();
         jCheckBpass = new javax.swing.JCheckBox();
@@ -132,17 +131,14 @@ public void showStudent() {
         updateStudent.setBackground(new java.awt.Color(153, 204, 255));
         updateStudent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStudent.setText("Update");
+        updateStudent.addActionListener(this::updateStudentActionPerformed);
         jPanel1.add(updateStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 197, -1, -1));
 
         deleteStudent.setBackground(new java.awt.Color(153, 204, 255));
         deleteStudent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         deleteStudent.setText("Delete");
+        deleteStudent.addActionListener(this::deleteStudentActionPerformed);
         jPanel1.add(deleteStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 197, 82, -1));
-
-        clearStudentForm.setBackground(new java.awt.Color(153, 204, 255));
-        clearStudentForm.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        clearStudentForm.setText("Clear");
-        jPanel1.add(clearStudentForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 197, -1, -1));
 
         addStudent.setBackground(new java.awt.Color(153, 204, 255));
         addStudent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -178,19 +174,23 @@ public void showStudent() {
         jLabel5.setText("sort by:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
-        jRadid.setText("ID");
-        jPanel2.add(jRadid, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+        sortbyId.setText("ID");
+        sortbyId.addActionListener(this::sortbyIdActionPerformed);
+        jPanel2.add(sortbyId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
-        jRadname.setText("name");
-        jPanel2.add(jRadname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
+        sortByname.setText("name");
+        sortByname.addActionListener(this::sortBynameActionPerformed);
+        jPanel2.add(sortByname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
 
         jLabel6.setText("Filter:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
 
         jCheckBfail.setText("failed");
+        jCheckBfail.addActionListener(this::jCheckBfailActionPerformed);
         jPanel2.add(jCheckBfail, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
 
         jCheckBpass.setText("pass");
+        jCheckBpass.addActionListener(this::jCheckBpassActionPerformed);
         jPanel2.add(jCheckBpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, -1, -1));
 
         jLabel7.setText("Filter by marks:");
@@ -207,6 +207,7 @@ public void showStudent() {
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
         searchButton.setText("Search");
+        searchButton.addActionListener(this::searchButtonActionPerformed);
 
         jMenuBar1.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -353,6 +354,389 @@ public void showStudent() {
         showStudent();
     }//GEN-LAST:event_allStudentActionPerformed
 
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+
+    try {
+        stmt = conn.createStatement();
+
+        String sql = "SELECT id, name, email, marks, course FROM student WHERE 1=1";
+
+        String keyword = searchInput.getText().trim();
+
+        // ✅ PRIORITY SEARCH (keyword)
+        if (!keyword.isEmpty()) {
+            keyword = keyword.toUpperCase();
+
+            sql += " AND (UPPER(name) LIKE '%" + keyword + "%'"
+                 + " OR UPPER(email) LIKE '%" + keyword + "%'"
+                 + " OR UPPER(course) LIKE '%" + keyword + "%')";
+
+        } else {
+            // ✅ ONLY apply filters when NO keyword
+
+            // --- Course filter ---
+            String selectedCourse = course.getSelectedItem().toString();
+            if (selectedCourse != null &&
+                !selectedCourse.equals("") &&
+                !selectedCourse.equalsIgnoreCase("All") &&
+                !selectedCourse.equalsIgnoreCase("Select Course")) {
+
+                sql += " AND course = '" + selectedCourse + "'";
+            }
+
+            // --- Pass / Fail ---
+            if (jCheckBpass.isSelected() && !jCheckBfail.isSelected()) {
+                sql += " AND marks >= 50";
+            } else if (!jCheckBpass.isSelected() && jCheckBfail.isSelected()) {
+                sql += " AND marks < 50";
+            }
+
+            // --- Slider ---
+            int sliderMarks = sldmarks.getValue();
+            if (sliderMarks > 0) {
+                sql += " AND marks >= " + sliderMarks;
+            }
+        }
+
+        // --- Sorting ---
+        if (sortbyId.isSelected()) {
+            sql += " ORDER BY id";
+        } else if (sortByname.isSelected()) {
+            sql += " ORDER BY name";
+        }
+
+        // 🔥 DEBUG
+        System.out.println("SQL: " + sql);
+
+        rs = stmt.executeQuery(sql);
+
+        javax.swing.table.DefaultTableModel model =
+            new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+            );
+
+        boolean found = false;
+
+        while (rs.next()) {
+            found = true;
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(null, "No student found.");
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void updateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStudentActionPerformed
+
+    try {
+        // 1️⃣ Ensure database connection exist
+        if (conn == null) {
+            JOptionPane.showMessageDialog(null, "Database not connected!");
+            return;
+        }
+
+        stmt = conn.createStatement();
+
+        // 2️⃣ Get email to identify student
+        String studentEmail = email.getText().trim();
+        if (studentEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter the student's email to update!");
+            return;
+        }
+
+        // 3️⃣ Check if student exists
+        rs = stmt.executeQuery("SELECT * FROM student WHERE email='" + studentEmail + "'");
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(null, "No student found with email: " + studentEmail);
+            return;
+        }
+
+        int studentId = rs.getInt("id"); // unique identifier
+
+        // 4️⃣ Prepare fields to update
+        StringBuilder updateQuery = new StringBuilder("UPDATE student SET ");
+        boolean firstField = true;
+
+        // Name
+        String newName = name.getText().trim();
+        if (!newName.isEmpty()) {
+            updateQuery.append("name='").append(newName).append("'");
+            firstField = false;
+        }
+
+        // Marks
+        String newMarksText = marks.getText().trim();
+        if (!newMarksText.isEmpty()) {
+            try {
+                int newMarks = Integer.parseInt(newMarksText);
+                if (!firstField) updateQuery.append(", ");
+                updateQuery.append("marks=").append(newMarks);
+                firstField = false;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Marks must be a number!");
+                return;
+            }
+        }
+
+        // Course
+        Object selectedCourse = course.getSelectedItem();
+        if (selectedCourse != null && !selectedCourse.toString().isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("course='").append(selectedCourse.toString()).append("'");
+        }
+
+        // 5️⃣ If no fields were provided to update
+        if (firstField) {
+            JOptionPane.showMessageDialog(null, "No fields to update! Enter name, marks, or course.");
+            return;
+        }
+
+        // 6️⃣ Complete query with WHERE clause
+        updateQuery.append(" WHERE id=").append(studentId);
+
+        // 7️⃣ Execute update
+        int rowsUpdated = stmt.executeUpdate(updateQuery.toString());
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(null, "Student updated successfully!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Update failed!");
+        }
+
+        // 8️⃣ Refresh table and clear form
+        showStudent(); // refresh table
+        name.setText("");
+        marks.setText("");
+        email.setText("");
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_updateStudentActionPerformed
+
+    private void deleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStudentActionPerformed
+
+    try {
+        // 1️⃣ Ensure database connection exists
+        if (conn == null) {
+            JOptionPane.showMessageDialog(null, "Database not connected!");
+            return;
+        }
+
+        stmt = conn.createStatement();
+
+        // 2️⃣ Get email from input
+        String studentEmail = email.getText().trim();
+        if (studentEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter the student's email to delete!");
+            return;
+        }
+
+        // 3️⃣ Check if student exists
+        rs = stmt.executeQuery("SELECT * FROM student WHERE email='" + studentEmail + "'");
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(null, "No student found with email: " + studentEmail);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+            null,
+            "Are you sure you want to delete student with email: " + studentEmail + "?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // user cancelled
+        }
+
+        // 4️⃣ Delete student
+        int rowsDeleted = stmt.executeUpdate("DELETE FROM student WHERE email='" + studentEmail + "'");
+        if (rowsDeleted > 0) {
+            JOptionPane.showMessageDialog(null, "Student deleted successfully!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Delete failed!");
+        }
+
+        // 5️⃣ Refresh table and clear form
+        showStudent(); // refresh table
+        name.setText("");
+        marks.setText("");
+        email.setText("");
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_deleteStudentActionPerformed
+
+    private void sortbyIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortbyIdActionPerformed
+      
+    try {
+        stmt = conn.createStatement();
+
+        String sql = "SELECT id, name, email, course, marks FROM student";
+
+        // Sorting
+        if (sortbyId.isSelected()) {
+            sql += " ORDER BY id";      // numeric sort by ID
+        } else if (sortByname.isSelected()) {
+            sql += " ORDER BY name";    // alphabetical sort by name
+        }
+
+        rs = stmt.executeQuery(sql);
+
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_sortbyIdActionPerformed
+
+    private void sortBynameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortBynameActionPerformed
+       
+    try {
+        stmt = conn.createStatement();
+
+        String sql = "SELECT id, name, email, course, marks FROM student";
+
+        // Sorting based on selected radio
+        if (sortbyId.isSelected()) {
+            sql += " ORDER BY id";      // numeric sort by ID
+        } else if (sortByname.isSelected()) {
+            sql += " ORDER BY name";    // alphabetical sort by name
+        }
+
+        rs = stmt.executeQuery(sql);
+
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_sortBynameActionPerformed
+
+    private void jCheckBpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBpassActionPerformed
+     
+    try {
+        stmt = conn.createStatement();
+
+        // Base query
+        String sql = "SELECT id, name, email, course, marks FROM student WHERE 1=1";
+
+        // If checkbox is selected, only show students who passed
+        if (jCheckBpass.isSelected()) {
+            sql += " AND marks >= 50";  // Pass condition
+        }
+
+        // Execute query
+        rs = stmt.executeQuery(sql);
+
+        // Fill table
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_jCheckBpassActionPerformed
+
+    private void jCheckBfailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBfailActionPerformed
+
+    try {
+        stmt = conn.createStatement();
+
+        // Query only failed students (marks < 50)
+        String sql = "SELECT id, name, email, course, marks FROM student WHERE marks < 50";
+
+        rs = stmt.executeQuery(sql);
+
+        // Create table model
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_jCheckBfailActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -381,7 +765,6 @@ public void showStudent() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addStudent;
     private javax.swing.JButton allStudent;
-    private javax.swing.JButton clearStudentForm;
     private javax.swing.JComboBox<String> course;
     private javax.swing.JButton deleteStudent;
     private javax.swing.JTextField email;
@@ -406,9 +789,7 @@ public void showStudent() {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadid;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadname;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem logout;
@@ -417,6 +798,8 @@ public void showStudent() {
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchInput;
     private javax.swing.JSlider sldmarks;
+    private javax.swing.JRadioButton sortByname;
+    private javax.swing.JRadioButton sortbyId;
     private javax.swing.JScrollPane studentTable;
     private javax.swing.JButton updateStudent;
     // End of variables declaration//GEN-END:variables
