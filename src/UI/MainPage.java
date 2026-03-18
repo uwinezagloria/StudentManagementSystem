@@ -179,6 +179,7 @@ public void showStudent() {
         jPanel2.add(sortbyId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
         sortByname.setText("name");
+        sortByname.addActionListener(this::sortBynameActionPerformed);
         jPanel2.add(sortByname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
 
         jLabel6.setText("Filter:");
@@ -620,6 +621,45 @@ public void showStudent() {
     }
 
     }//GEN-LAST:event_sortbyIdActionPerformed
+
+    private void sortBynameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortBynameActionPerformed
+       
+    try {
+        stmt = conn.createStatement();
+
+        String sql = "SELECT id, name, email, course, marks FROM student";
+
+        // Sorting based on selected radio
+        if (sortbyId.isSelected()) {
+            sql += " ORDER BY id";      // numeric sort by ID
+        } else if (sortByname.isSelected()) {
+            sql += " ORDER BY name";    // alphabetical sort by name
+        }
+
+        rs = stmt.executeQuery(sql);
+
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_sortBynameActionPerformed
 
     /**
      * @param args the command line arguments
