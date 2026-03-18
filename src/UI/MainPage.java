@@ -92,7 +92,7 @@ public void showStudent() {
         jMenu1 = new javax.swing.JMenu();
         logout = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        addStudentMenu = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -215,20 +215,24 @@ public void showStudent() {
 
         logout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         logout.setText("Logout");
+        logout.addActionListener(this::logoutActionPerformed);
         jMenu1.add(logout);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Students");
 
-        jMenuItem5.setText("Add");
-        jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
-        jMenu2.add(jMenuItem5);
+        addStudentMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        addStudentMenu.setText("Add");
+        addStudentMenu.addActionListener(this::addStudentMenuActionPerformed);
+        jMenu2.add(addStudentMenu);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem2.setText("Update");
         jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
         jMenu2.add(jMenuItem2);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, 0));
         jMenuItem3.setText("Delete");
         jMenu2.add(jMenuItem3);
 
@@ -302,9 +306,9 @@ public void showStudent() {
         // TODO add your handling code here:
     }//GEN-LAST:event_courseActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void addStudentMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentMenuActionPerformed
+        setVisible(true);
+    }//GEN-LAST:event_addStudentMenuActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -737,6 +741,12 @@ public void showStudent() {
 
     }//GEN-LAST:event_jCheckBfailActionPerformed
 
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        setVisible(false);
+        new Mylogin().setVisible(true);
+        
+    }//GEN-LAST:event_logoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -764,6 +774,7 @@ public void showStudent() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addStudent;
+    private javax.swing.JMenuItem addStudentMenu;
     private javax.swing.JButton allStudent;
     private javax.swing.JComboBox<String> course;
     private javax.swing.JButton deleteStudent;
@@ -785,7 +796,6 @@ public void showStudent() {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
