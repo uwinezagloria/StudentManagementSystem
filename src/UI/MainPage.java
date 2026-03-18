@@ -138,6 +138,7 @@ public void showStudent() {
         deleteStudent.setBackground(new java.awt.Color(153, 204, 255));
         deleteStudent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         deleteStudent.setText("Delete");
+        deleteStudent.addActionListener(this::deleteStudentActionPerformed);
         jPanel1.add(deleteStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 197, 82, -1));
 
         clearStudentForm.setBackground(new java.awt.Color(153, 204, 255));
@@ -442,9 +443,9 @@ public void showStudent() {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void updateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStudentActionPerformed
-     
+
     try {
-        // 1️⃣ Ensure database connection exists
+        // 1️⃣ Ensure database connection exist
         if (conn == null) {
             JOptionPane.showMessageDialog(null, "Database not connected!");
             return;
@@ -529,6 +530,62 @@ public void showStudent() {
     }
 
     }//GEN-LAST:event_updateStudentActionPerformed
+
+    private void deleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStudentActionPerformed
+
+    try {
+        // 1️⃣ Ensure database connection exists
+        if (conn == null) {
+            JOptionPane.showMessageDialog(null, "Database not connected!");
+            return;
+        }
+
+        stmt = conn.createStatement();
+
+        // 2️⃣ Get email from input
+        String studentEmail = email.getText().trim();
+        if (studentEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter the student's email to delete!");
+            return;
+        }
+
+        // 3️⃣ Check if student exists
+        rs = stmt.executeQuery("SELECT * FROM student WHERE email='" + studentEmail + "'");
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(null, "No student found with email: " + studentEmail);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+            null,
+            "Are you sure you want to delete student with email: " + studentEmail + "?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // user cancelled
+        }
+
+        // 4️⃣ Delete student
+        int rowsDeleted = stmt.executeUpdate("DELETE FROM student WHERE email='" + studentEmail + "'");
+        if (rowsDeleted > 0) {
+            JOptionPane.showMessageDialog(null, "Student deleted successfully!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Delete failed!");
+        }
+
+        // 5️⃣ Refresh table and clear form
+        showStudent(); // refresh table
+        name.setText("");
+        marks.setText("");
+        email.setText("");
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_deleteStudentActionPerformed
 
     /**
      * @param args the command line arguments
