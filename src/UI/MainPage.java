@@ -71,7 +71,6 @@ public void showStudent() {
         course = new javax.swing.JComboBox<>();
         updateStudent = new javax.swing.JButton();
         deleteStudent = new javax.swing.JButton();
-        clearStudentForm = new javax.swing.JButton();
         addStudent = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         studentTable = new javax.swing.JScrollPane();
@@ -80,8 +79,8 @@ public void showStudent() {
         searchInput = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jRadid = new javax.swing.JRadioButton();
-        jRadname = new javax.swing.JRadioButton();
+        sortbyId = new javax.swing.JRadioButton();
+        sortByname = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jCheckBfail = new javax.swing.JCheckBox();
         jCheckBpass = new javax.swing.JCheckBox();
@@ -141,11 +140,6 @@ public void showStudent() {
         deleteStudent.addActionListener(this::deleteStudentActionPerformed);
         jPanel1.add(deleteStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 197, 82, -1));
 
-        clearStudentForm.setBackground(new java.awt.Color(153, 204, 255));
-        clearStudentForm.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        clearStudentForm.setText("Clear");
-        jPanel1.add(clearStudentForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 197, -1, -1));
-
         addStudent.setBackground(new java.awt.Color(153, 204, 255));
         addStudent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         addStudent.setText("Add");
@@ -180,11 +174,12 @@ public void showStudent() {
         jLabel5.setText("sort by:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
-        jRadid.setText("ID");
-        jPanel2.add(jRadid, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+        sortbyId.setText("ID");
+        sortbyId.addActionListener(this::sortbyIdActionPerformed);
+        jPanel2.add(sortbyId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
-        jRadname.setText("name");
-        jPanel2.add(jRadname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
+        sortByname.setText("name");
+        jPanel2.add(sortByname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
 
         jLabel6.setText("Filter:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
@@ -401,9 +396,9 @@ public void showStudent() {
         }
 
         // --- Sorting ---
-        if (jRadid.isSelected()) {
+        if (sortbyId.isSelected()) {
             sql += " ORDER BY id";
-        } else if (jRadname.isSelected()) {
+        } else if (sortByname.isSelected()) {
             sql += " ORDER BY name";
         }
 
@@ -587,6 +582,45 @@ public void showStudent() {
     }
     }//GEN-LAST:event_deleteStudentActionPerformed
 
+    private void sortbyIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortbyIdActionPerformed
+      
+    try {
+        stmt = conn.createStatement();
+
+        String sql = "SELECT id, name, email, course, marks FROM student";
+
+        // Sorting
+        if (sortbyId.isSelected()) {
+            sql += " ORDER BY id";      // numeric sort by ID
+        } else if (sortByname.isSelected()) {
+            sql += " ORDER BY name";    // alphabetical sort by name
+        }
+
+        rs = stmt.executeQuery(sql);
+
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_sortbyIdActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -615,7 +649,6 @@ public void showStudent() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addStudent;
     private javax.swing.JButton allStudent;
-    private javax.swing.JButton clearStudentForm;
     private javax.swing.JComboBox<String> course;
     private javax.swing.JButton deleteStudent;
     private javax.swing.JTextField email;
@@ -640,9 +673,7 @@ public void showStudent() {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadid;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadname;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem logout;
@@ -651,6 +682,8 @@ public void showStudent() {
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchInput;
     private javax.swing.JSlider sldmarks;
+    private javax.swing.JRadioButton sortByname;
+    private javax.swing.JRadioButton sortbyId;
     private javax.swing.JScrollPane studentTable;
     private javax.swing.JButton updateStudent;
     // End of variables declaration//GEN-END:variables
