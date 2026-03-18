@@ -186,6 +186,7 @@ public void showStudent() {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
 
         jCheckBfail.setText("failed");
+        jCheckBfail.addActionListener(this::jCheckBfailActionPerformed);
         jPanel2.add(jCheckBfail, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
 
         jCheckBpass.setText("pass");
@@ -701,6 +702,40 @@ public void showStudent() {
     }
 
     }//GEN-LAST:event_jCheckBpassActionPerformed
+
+    private void jCheckBfailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBfailActionPerformed
+
+    try {
+        stmt = conn.createStatement();
+
+        // Query only failed students (marks < 50)
+        String sql = "SELECT id, name, email, course, marks FROM student WHERE marks < 50";
+
+        rs = stmt.executeQuery(sql);
+
+        // Create table model
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("course"),
+                rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_jCheckBfailActionPerformed
 
     /**
      * @param args the command line arguments
