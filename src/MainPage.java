@@ -72,9 +72,12 @@ public class MainPage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Student Management System - Dashboard");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1370, 620));
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(200, 230, 201));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Students information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18), new java.awt.Color(0, 0, 255))); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(620, 270));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
@@ -96,26 +99,31 @@ public class MainPage extends javax.swing.JFrame {
         courseDropdown.addActionListener(this::courseDropdownActionPerformed);
         jPanel1.add(courseDropdown, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 157, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(153, 204, 255));
+        jButton1.setBackground(new java.awt.Color(245, 124, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Update");
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 197, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(153, 204, 255));
+        jButton2.setBackground(new java.awt.Color(198, 40, 40));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Delete");
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 197, 82, -1));
 
-        jButton3.setBackground(new java.awt.Color(153, 204, 255));
+        jButton3.setBackground(new java.awt.Color(93, 125, 139));
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Clear");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 197, -1, -1));
 
-        jButton4.setBackground(new java.awt.Color(153, 204, 255));
+        jButton4.setBackground(new java.awt.Color(21, 101, 192));
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Add");
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 197, 57, -1));
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 410, 280));
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 590, 280));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Students Table", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Emoji", 1, 14), new java.awt.Color(0, 51, 255))); // NOI18N
 
@@ -135,8 +143,9 @@ public class MainPage extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         jLabel4.setText("Search Student :");
 
-        jTextField4.setForeground(new java.awt.Color(0, 255, 255));
-        jTextField4.setText("txt  Search");
+        jTextField4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(0, 0, 204));
+        jTextField4.setText("Search by name");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sort and Filtering", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -163,12 +172,12 @@ public class MainPage extends javax.swing.JFrame {
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
         jPanel2.add(sldmarks, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 255));
+        jButton5.setBackground(new java.awt.Color(21, 101, 192));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Show All");
 
-        jButton6.setBackground(new java.awt.Color(0, 51, 255));
+        jButton6.setBackground(new java.awt.Color(21, 101, 192));
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Search");
@@ -221,7 +230,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1098, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -233,9 +242,9 @@ public class MainPage extends javax.swing.JFrame {
                                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(42, 42, 42)
                                 .addComponent(jButton6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton5)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,12 +255,11 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -278,6 +286,10 @@ public class MainPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jAboutActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
