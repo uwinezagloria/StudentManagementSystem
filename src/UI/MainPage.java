@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -25,15 +26,33 @@ public class MainPage extends javax.swing.JFrame {
         super("Add student");
         initComponents();
         conn=DatabaseConnection.getConnection();
-    }
-    
-public void showStudent(){
-    try{
-        stmt=conn.createStatement();
         
     }
-    catch(Exception e){
-        JOptionPane.showMessageDialog(null,e);
+    
+public void showStudent() {
+    try {
+        stmt = conn.createStatement();
+        String sql = "SELECT id, name, email, course, marks FROM student"; // Course before Marks to match table
+        rs = stmt.executeQuery(sql);
+
+        // Create table model
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
+        );
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("email"),
+                    rs.getString("course"),
+                    rs.getInt("marks")
+            });
+        }
+
+        jTable1.setModel(model); // Set model to JTable
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
     }
 }
    
@@ -68,7 +87,7 @@ public void showStudent(){
         jCheckBpass = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         sldmarks = new javax.swing.JSlider();
-        jButton5 = new javax.swing.JButton();
+        allStudent = new javax.swing.JButton();
         searchButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -178,10 +197,11 @@ public void showStudent(){
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
         jPanel2.add(sldmarks, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 255));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Show All");
+        allStudent.setBackground(new java.awt.Color(0, 51, 255));
+        allStudent.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        allStudent.setForeground(new java.awt.Color(255, 255, 255));
+        allStudent.setText("Show All");
+        allStudent.addActionListener(this::allStudentActionPerformed);
 
         searchButton.setBackground(new java.awt.Color(0, 51, 255));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -249,7 +269,7 @@ public void showStudent(){
                                 .addGap(42, 42, 42)
                                 .addComponent(searchButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton5)))))
+                                .addComponent(allStudent)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -266,7 +286,7 @@ public void showStudent(){
                                 .addComponent(jLabel4)
                                 .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(allStudent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(studentTable, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -291,34 +311,47 @@ public void showStudent(){
 
     private void addStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentActionPerformed
                                                   
-    try{
-        stmt = conn.createStatement();  
-        String stdName = name.getText();
-        String stdEmail = email.getText();
-        int stdMarks = Integer.parseInt(marks.getText());
-        String stdCourse = course.getSelectedItem().toString();
-// 1️⃣ Check if email exists
-    String checkSql = "SELECT * FROM person WHERE email='" + stdEmail + "'";
-    rs = stmt.executeQuery(checkSql);
+    try {
+        stmt = conn.createStatement();
 
-    if (rs.next()) {
-        // Email exists
-        JOptionPane.showMessageDialog(null, "Email already used!");
-    }
-    else{
-       String sql = "INSERT INTO student (name, email, marks, course) VALUES ('"
-                     + stdName + "','" + stdEmail + "'," + stdMarks + ",'" + stdCourse + "')";
+        String stdName = name.getText().trim();
+        String stdEmail = email.getText().trim();
+        int stdMarks = Integer.parseInt(marks.getText().trim());
+        String stdCourse = course.getSelectedItem().toString();
+
+        // Check if email exists in the student table
+        String checkSql = "SELECT * FROM student WHERE email='" + stdEmail + "'";
+        rs = stmt.executeQuery(checkSql);
+
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(null, "Email already used!");
+            return;
+        }
+
+        String sql = "INSERT INTO student (name, email, course, marks) VALUES ('"
+                + stdName + "','" + stdEmail + "','" + stdCourse + "'," + stdMarks + ")";
         stmt.executeUpdate(sql);
 
-        JOptionPane.showMessageDialog(null,"Student Added Successfully"); 
-    }
-        
-    }
-    catch(Exception e){
+        JOptionPane.showMessageDialog(null, "Student Added Successfully");
+
+        // Refresh table
+        showStudent();
+
+        // Clear form
+        name.setText("");
+        email.setText("");
+        marks.setText("");
+        course.setSelectedIndex(0);
+
+    } catch (Exception e) {
         JOptionPane.showMessageDialog(null, e);
-    
-}  
+    }
+
     }//GEN-LAST:event_addStudentActionPerformed
+
+    private void allStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allStudentActionPerformed
+        showStudent();
+    }//GEN-LAST:event_allStudentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -347,11 +380,11 @@ public void showStudent(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addStudent;
+    private javax.swing.JButton allStudent;
     private javax.swing.JButton clearStudentForm;
     private javax.swing.JComboBox<String> course;
     private javax.swing.JButton deleteStudent;
     private javax.swing.JTextField email;
-    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBfail;
     private javax.swing.JCheckBox jCheckBpass;
     private javax.swing.JLabel jLabel1;

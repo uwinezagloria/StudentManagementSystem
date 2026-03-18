@@ -124,7 +124,7 @@
                               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                               <Component id="searchButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                              <Component id="allStudent" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -149,7 +149,7 @@
                               <Component id="searchInput" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                               <Component id="searchButton" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jButton5" alignment="1" min="-2" pref="19" max="-2" attributes="0"/>
+                          <Component id="allStudent" alignment="1" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="studentTable" min="-2" pref="205" max="-2" attributes="0"/>
@@ -514,7 +514,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="allStudent">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="33" red="0" type="rgb"/>
@@ -527,6 +527,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Show All"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allStudentActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="searchButton">
       <Properties>
