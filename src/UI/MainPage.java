@@ -55,76 +55,7 @@ public void showStudent() {
         JOptionPane.showMessageDialog(null, e);
     }
 }
-   private void searchStudent() {
-    try {
-        stmt = conn.createStatement();
-
-        // Base query
-        String sql = "SELECT id, name, email, marks, course FROM student WHERE 1=1";
-
-        // --- Search input (name, email, id) ---
-        String keyword = searchInput.getText().trim();
-        if (!keyword.isEmpty()) {
-            if (jRadid.isSelected()) {
-                sql += " AND id = " + keyword; // numeric search
-            } else {
-                sql += " AND (name LIKE '%" + keyword + "%' OR email LIKE '%" + keyword + "%')";
-            }
-        }
-
-        // --- Filter by course ---
-        String selectedCourse = course.getSelectedItem().toString();
-        if (!selectedCourse.isEmpty()) {
-            sql += " AND course = '" + selectedCourse + "'";
-        }
-
-        // --- Filter by pass/fail ---
-        if (jCheckBpass.isSelected() && !jCheckBfail.isSelected()) {
-            sql += " AND marks >= 50"; // pass
-        } else if (!jCheckBpass.isSelected() && jCheckBfail.isSelected()) {
-            sql += " AND marks < 50"; // fail
-        }
-
-        // --- Filter by marks slider ---
-        int sliderMarks = sldmarks.getValue();
-        sql += " AND marks >= " + sliderMarks;
-
-        // --- Sorting ---
-        if (jRadid.isSelected()) {
-            sql += " ORDER BY id";
-        } else if (jRadname.isSelected()) {
-            sql += " ORDER BY name";
-        }
-
-        rs = stmt.executeQuery(sql);
-
-        javax.swing.table.DefaultTableModel model =
-            new javax.swing.table.DefaultTableModel(
-                new String[]{"ID", "Name", "Email", "Course", "Marks"}, 0
-            );
-
-        boolean found = false;
-        while (rs.next()) {
-            found = true;
-            model.addRow(new Object[]{
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("email"),
-                rs.getString("course"),
-                rs.getInt("marks")
-            });
-        }
-
-        if (!found) {
-            JOptionPane.showMessageDialog(null, "No student found matching the criteria.");
-        }
-
-        jTable1.setModel(model);
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, e);
-    }
-}
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -201,6 +132,7 @@ public void showStudent() {
         updateStudent.setBackground(new java.awt.Color(153, 204, 255));
         updateStudent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateStudent.setText("Update");
+        updateStudent.addActionListener(this::updateStudentActionPerformed);
         jPanel1.add(updateStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 197, -1, -1));
 
         deleteStudent.setBackground(new java.awt.Color(153, 204, 255));
@@ -508,6 +440,95 @@ public void showStudent() {
     }
 
     }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void updateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStudentActionPerformed
+     
+    try {
+        // 1️⃣ Ensure database connection exists
+        if (conn == null) {
+            JOptionPane.showMessageDialog(null, "Database not connected!");
+            return;
+        }
+
+        stmt = conn.createStatement();
+
+        // 2️⃣ Get email to identify student
+        String studentEmail = email.getText().trim();
+        if (studentEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter the student's email to update!");
+            return;
+        }
+
+        // 3️⃣ Check if student exists
+        rs = stmt.executeQuery("SELECT * FROM student WHERE email='" + studentEmail + "'");
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(null, "No student found with email: " + studentEmail);
+            return;
+        }
+
+        int studentId = rs.getInt("id"); // unique identifier
+
+        // 4️⃣ Prepare fields to update
+        StringBuilder updateQuery = new StringBuilder("UPDATE student SET ");
+        boolean firstField = true;
+
+        // Name
+        String newName = name.getText().trim();
+        if (!newName.isEmpty()) {
+            updateQuery.append("name='").append(newName).append("'");
+            firstField = false;
+        }
+
+        // Marks
+        String newMarksText = marks.getText().trim();
+        if (!newMarksText.isEmpty()) {
+            try {
+                int newMarks = Integer.parseInt(newMarksText);
+                if (!firstField) updateQuery.append(", ");
+                updateQuery.append("marks=").append(newMarks);
+                firstField = false;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Marks must be a number!");
+                return;
+            }
+        }
+
+        // Course
+        Object selectedCourse = course.getSelectedItem();
+        if (selectedCourse != null && !selectedCourse.toString().isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("course='").append(selectedCourse.toString()).append("'");
+        }
+
+        // 5️⃣ If no fields were provided to update
+        if (firstField) {
+            JOptionPane.showMessageDialog(null, "No fields to update! Enter name, marks, or course.");
+            return;
+        }
+
+        // 6️⃣ Complete query with WHERE clause
+        updateQuery.append(" WHERE id=").append(studentId);
+
+        // 7️⃣ Execute update
+        int rowsUpdated = stmt.executeUpdate(updateQuery.toString());
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(null, "Student updated successfully!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Update failed!");
+        }
+
+        // 8️⃣ Refresh table and clear form
+        showStudent(); // refresh table
+        name.setText("");
+        marks.setText("");
+        email.setText("");
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_updateStudentActionPerformed
 
     /**
      * @param args the command line arguments
