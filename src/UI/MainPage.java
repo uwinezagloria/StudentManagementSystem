@@ -447,146 +447,70 @@ public void showStudent() {
     private void updateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStudentActionPerformed
 
     try {
-        // 1️⃣ Ensure database connection exist
-        if (conn == null) {
-            JOptionPane.showMessageDialog(null, "Database not connected!");
+
+        int row = jTable1.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a student first!");
             return;
         }
+
+        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+
+        String stdName = name.getText();
+        String stdEmail = email.getText();
+        String stdCourse = course.getSelectedItem().toString();
+        String stdMarks = marks.getText();
 
         stmt = conn.createStatement();
+        String sql = "UPDATE student SET name='" + stdName +
+                     "', email='" + stdEmail +
+                     "', course='" + stdCourse +
+                     "', marks=" + stdMarks +
+                     " WHERE id=" + id;
 
-        // 2️⃣ Get email to identify student
-        String studentEmail = email.getText().trim();
-        if (studentEmail.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Enter the student's email to update!");
-            return;
-        }
+        stmt.executeUpdate(sql);
 
-        // 3️⃣ Check if student exists
-        rs = stmt.executeQuery("SELECT * FROM student WHERE email='" + studentEmail + "'");
-        if (!rs.next()) {
-            JOptionPane.showMessageDialog(null, "No student found with email: " + studentEmail);
-            return;
-        }
+        JOptionPane.showMessageDialog(null, "Student updated successfully!");
 
-        int studentId = rs.getInt("id"); // unique identifier
-
-        // 4️⃣ Prepare fields to update
-        StringBuilder updateQuery = new StringBuilder("UPDATE student SET ");
-        boolean firstField = true;
-
-        // Name
-        String newName = name.getText().trim();
-        if (!newName.isEmpty()) {
-            updateQuery.append("name='").append(newName).append("'");
-            firstField = false;
-        }
-
-        // Marks
-        String newMarksText = marks.getText().trim();
-        if (!newMarksText.isEmpty()) {
-            try {
-                int newMarks = Integer.parseInt(newMarksText);
-                if (!firstField) updateQuery.append(", ");
-                updateQuery.append("marks=").append(newMarks);
-                firstField = false;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Marks must be a number!");
-                return;
-            }
-        }
-
-        // Course
-        Object selectedCourse = course.getSelectedItem();
-        if (selectedCourse != null && !selectedCourse.toString().isEmpty()) {
-            if (!firstField) updateQuery.append(", ");
-            updateQuery.append("course='").append(selectedCourse.toString()).append("'");
-        }
-
-        // 5️⃣ If no fields were provided to update
-        if (firstField) {
-            JOptionPane.showMessageDialog(null, "No fields to update! Enter name, marks, or course.");
-            return;
-        }
-
-        // 6️⃣ Complete query with WHERE clause
-        updateQuery.append(" WHERE id=").append(studentId);
-
-        // 7️⃣ Execute update
-        int rowsUpdated = stmt.executeUpdate(updateQuery.toString());
-        if (rowsUpdated > 0) {
-            JOptionPane.showMessageDialog(null, "Student updated successfully!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Update failed!");
-        }
-
-        // 8️⃣ Refresh table and clear form
-        showStudent(); // refresh table
-        name.setText("");
-        marks.setText("");
-        email.setText("");
+        showStudent();
 
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, e);
     }
 
     }//GEN-LAST:event_updateStudentActionPerformed
 
     private void deleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStudentActionPerformed
 
+    
     try {
-        // 1️⃣ Ensure database connection exists
-        if (conn == null) {
-            JOptionPane.showMessageDialog(null, "Database not connected!");
+
+        int row = jTable1.getSelectedRow();
+
+        // Check if a row is selected
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a student first!");
             return;
         }
 
+        // Get ID from selected row
+        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+
+        // Simple SQL delete
         stmt = conn.createStatement();
+        String sql = "DELETE FROM student WHERE id=" + id;
 
-        // 2️⃣ Get email from input
-        String studentEmail = email.getText().trim();
-        if (studentEmail.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Enter the student's email to delete!");
-            return;
-        }
+        stmt.executeUpdate(sql);
 
-        // 3️⃣ Check if student exists
-        rs = stmt.executeQuery("SELECT * FROM student WHERE email='" + studentEmail + "'");
-        if (!rs.next()) {
-            JOptionPane.showMessageDialog(null, "No student found with email: " + studentEmail);
-            return;
-        }
+        JOptionPane.showMessageDialog(null, "Student deleted successfully!");
 
-        int confirm = JOptionPane.showConfirmDialog(
-            null,
-            "Are you sure you want to delete student with email: " + studentEmail + "?",
-            "Confirm Delete",
-            JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) {
-            return; // user cancelled
-        }
-
-        // 4️⃣ Delete student
-        int rowsDeleted = stmt.executeUpdate("DELETE FROM student WHERE email='" + studentEmail + "'");
-        if (rowsDeleted > 0) {
-            JOptionPane.showMessageDialog(null, "Student deleted successfully!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Delete failed!");
-        }
-
-        // 5️⃣ Refresh table and clear form
         showStudent(); // refresh table
-        name.setText("");
-        marks.setText("");
-        email.setText("");
 
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, e);
     }
+
     }//GEN-LAST:event_deleteStudentActionPerformed
 
     private void sortbyIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortbyIdActionPerformed
@@ -747,29 +671,9 @@ public void showStudent() {
         
     }//GEN-LAST:event_logoutActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainPage().setVisible(true));
+        
+        java.awt.EventQueue.invokeLater(() ->new Mylogin().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
